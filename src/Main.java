@@ -7,16 +7,21 @@ public class Main {
     private final static char[] allowedNumbers = {'0','1','2','3','4','5','6','7','8','9'};
 
     public static void main(String[] args) {
+        generateString();
+    }
+
+    private static String generateString() { generateString(10); }
+
+    private static String generateString(int length) {
         StringBuilder string= new StringBuilder();
-        int stringLength = 10;
-        for (int i = 0; i < stringLength; i++) {
+        for (int i = 0; i < length; i++) {
             switch (getRandomNum(3)) {
                 case 0 -> string.append(allowedLowercase[getRandomNum(allowedLowercase.length)]);
                 case 1 -> string.append(allowedUppercase[getRandomNum(allowedUppercase.length)]);
                 case 2 -> string.append(allowedNumbers[getRandomNum(allowedNumbers.length)]);
             }
         }
-        System.out.println(string);
+        return string.toString();
     }
 
     private static int getRandomNum(int max) { return ThreadLocalRandom.current().nextInt(0, max); }
