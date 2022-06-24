@@ -10,6 +10,7 @@ public class Main {
     private final static char[] allowedNumbers = {'3','4','5','7','8','9'};
 
     private static int times = 1;
+    private static int length = 10;
     private static boolean toFile = false;
 
     public static void main(String[] args) {
@@ -21,6 +22,10 @@ public class Main {
                     i++;
                 }
                 case "-tofile", "-toFile" -> toFile = true;
+                case "-length" -> {
+                    length = Integer.parseInt(args[i+1]);
+                    i++;
+                }
             }
         }
 
@@ -39,9 +44,7 @@ public class Main {
         }
     }
 
-    private static String generateString() { return generateString(10); }
-
-    private static String generateString(int length) {
+    private static String generateString() {
         StringBuilder string= new StringBuilder();
         for (int i = 0; i < length; i++) {
             switch (getRandomNum(3)) {
