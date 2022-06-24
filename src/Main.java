@@ -1,3 +1,6 @@
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
@@ -7,9 +10,9 @@ public class Main {
     private final static char[] allowedNumbers = {'3','4','5','7','8','9'};
 
     private static int times = 1;
+    private static boolean toFile = false;
 
     public static void main(String[] args) {
-        System.out.println("Number of Command Line Arguments = " + args.length);
         for (int i = 0; i < args.length; i++) {
             System.out.printf("Command Line Argument %d is %s%n",i,args[i]);
             switch (args[i]) {
@@ -17,14 +20,24 @@ public class Main {
                     times = Integer.parseInt(args[i+1]);
                     i++;
                 }
+                case "-tofile", "-toFile" -> toFile = true;
             }
         }
 
-        for (int i = 0; i < times; i++) {
-            System.out.println(generateString());
+        if (toFile) {
+            try {
+                PrintWriter out = new PrintWriter("output" + checkForFile() + ".txt");
+                for (int i = 0; i < times; i++) {
+                    out.println(generateString());
+                }
+                out.close();
+            } catch (IOException e) { e.printStackTrace(); }
+        } else {
+            for (int i = 0; i < times; i++) {
+                System.out.println(generateString());
+            }
         }
     }
-
 
     private static String generateString() { return generateString(10); }
 
@@ -38,6 +51,18 @@ public class Main {
             }
         }
         return string.toString();
+    }
+
+    private static int checkForFile() { return checkForFile(-1); }
+
+    private static int checkForFile(int i) {
+        i++;
+        if ( Files.exists(Paths.get("output"+i+".txt"))) {
+            return checkForFile(i);
+        } else {
+            System.out.println("File Created: output" + i + ".txt");
+            return i;
+        }
     }
 
     private static int getRandomNum(int max) { return ThreadLocalRandom.current().nextInt(0, max); }
