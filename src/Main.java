@@ -7,10 +7,10 @@ public class Main {
     private final static char[] allowedNumbers = {'0','1','2','3','4','5','6','7','8','9'};
 
     public static void main(String[] args) {
-        generateString();
+        System.out.println(generateString());
     }
 
-    private static String generateString() { generateString(10); }
+    private static String generateString() { return generateString(10); }
 
     private static String generateString(int length) {
         StringBuilder string= new StringBuilder();
